@@ -3,7 +3,7 @@
 ==========================================
 
 [0;36mRunning test:[0m Simple valid case
-[0;32mPASS[0m | HTTP 200 | 28 ms
+[0;32mPASS[0m | HTTP 200 | 192 ms
 {
   "truck_id": "truck-1",
   "selected_order_ids": [
@@ -18,18 +18,18 @@
 }
 ------------------------------------------
 [0;36mRunning test:[0m Empty orders list
-[0;32mPASS[0m | HTTP 400 | 27 ms
+[0;32mPASS[0m | HTTP 400 | 32 ms
 {
   "errorCode": "INVALID_REQUEST",
   "message": "Invalid request payload",
   "details": [
     "Validation failed for argument [0] in public org.springframework.http.ResponseEntity<com.teleport.optimal_truck_load_planner.api.dto.response.OptimizeLoadResponse> com.teleport.optimal_truck_load_planner.api.controller.LoadOptimizerController.optimize(com.teleport.optimal_truck_load_planner.api.dto.request.OptimizeLoadRequest): [Field error in object 'optimizeLoadRequest' on field 'orders': rejected value [[]]; codes [NotEmpty.optimizeLoadRequest.orders,NotEmpty.orders,NotEmpty.java.util.List,NotEmpty]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [optimizeLoadRequest.orders,orders]; arguments []; default message [orders]]; default message [orders list cannot be empty]] "
   ],
-  "timestamp": "2026-01-13T14:29:43.604543Z"
+  "timestamp": "2026-01-13T15:05:00.747911001Z"
 }
 ------------------------------------------
 [0;36mRunning test:[0m Invalid pickup/delivery dates
-[0;32mPASS[0m | HTTP 200 | 24 ms
+[0;32mPASS[0m | HTTP 200 | 22 ms
 {
   "truck_id": "truck-1",
   "selected_order_ids": [],
@@ -41,7 +41,7 @@
 }
 ------------------------------------------
 [0;36mRunning test:[0m Hazmat conflict
-[0;32mPASS[0m | HTTP 200 | 22 ms
+[0;32mPASS[0m | HTTP 200 | 23 ms
 {
   "truck_id": "truck-1",
   "selected_order_ids": [
@@ -67,7 +67,7 @@
 }
 ------------------------------------------
 [0;36mRunning test:[0m No feasible combination
-[0;32mPASS[0m | HTTP 200 | 23 ms
+[0;32mPASS[0m | HTTP 200 | 24 ms
 {
   "truck_id": "truck-1",
   "selected_order_ids": [],
@@ -79,7 +79,7 @@
 }
 ------------------------------------------
 [0;36mRunning test:[0m 22 orders - normal
-[0;32mPASS[0m | HTTP 200 | 1185 ms
+[0;32mPASS[0m | HTTP 200 | 1048 ms
 {
   "truck_id": "truck-1",
   "selected_order_ids": [
@@ -114,7 +114,7 @@
 }
 ------------------------------------------
 [0;36mRunning test:[0m 22 orders - hazmat only
-[0;32mPASS[0m | HTTP 200 | 1193 ms
+[0;32mPASS[0m | HTTP 200 | 963 ms
 {
   "truck_id": "truck-1",
   "selected_order_ids": [
@@ -149,7 +149,7 @@
 }
 ------------------------------------------
 [0;36mRunning test:[0m Route mismatch
-[0;32mPASS[0m | HTTP 200 | 28 ms
+[0;32mPASS[0m | HTTP 200 | 27 ms
 {
   "truck_id": "truck-1",
   "selected_order_ids": [
