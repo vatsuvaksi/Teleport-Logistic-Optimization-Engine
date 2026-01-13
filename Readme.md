@@ -19,7 +19,7 @@ Given a truck and a set of shipment orders, the service selects the **optimal co
 
 ```bash
 git clone https://github.com/vatsuvaksi/Teleport-Logistic-Optimization-Engine.git
-cd optimal-truck-load-planner
+cd Teleport-Logistic-Optimization-Engine
 
 docker compose up --build
 ```
