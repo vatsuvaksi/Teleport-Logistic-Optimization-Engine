@@ -1,0 +1,30 @@
+# Maven
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Logs
+*.log
+
+# Test artifacts
+surefire-reports/
+failsafe-reports/
+
+# Node / misc (just in case)
+node_modules/
+
+# Docker files themselves
+Dockerfile
+docker-compose.yml

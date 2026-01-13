@@ -1,0 +1,35 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: optimal-truck-load-planner
+
+  jackson:
+    default-property-inclusion: non_null
+
+  profiles:
+    active: default
+
+logging:
+  level:
+    root: INFO
+    com.teleport.optimal_truck_load_planner: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
+
+# -----------------------------
+# Redis configuration (optional)
+# -----------------------------
+redis:
+  host: localhost
+  port: 6379
+  timeout:
+    ms: 2000

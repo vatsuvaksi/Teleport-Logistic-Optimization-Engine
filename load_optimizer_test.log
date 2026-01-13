@@ -1,0 +1,166 @@
+==========================================
+ Optimal Truck Load Planner - Test Suite  
+==========================================
+
+[0;36mRunning test:[0m Simple valid case
+[0;32mPASS[0m | HTTP 200 | 28 ms
+{
+  "truck_id": "truck-1",
+  "selected_order_ids": [
+    "o1",
+    "o2"
+  ],
+  "total_payout_cents": 350000,
+  "total_weight_lbs": 27000,
+  "total_volume_cuft": 1700,
+  "utilization_weight_percent": 61.36,
+  "utilization_volume_percent": 56.67
+}
+------------------------------------------
+[0;36mRunning test:[0m Empty orders list
+[0;32mPASS[0m | HTTP 400 | 27 ms
+{
+  "errorCode": "INVALID_REQUEST",
+  "message": "Invalid request payload",
+  "details": [
+    "Validation failed for argument [0] in public org.springframework.http.ResponseEntity<com.teleport.optimal_truck_load_planner.api.dto.response.OptimizeLoadResponse> com.teleport.optimal_truck_load_planner.api.controller.LoadOptimizerController.optimize(com.teleport.optimal_truck_load_planner.api.dto.request.OptimizeLoadRequest): [Field error in object 'optimizeLoadRequest' on field 'orders': rejected value [[]]; codes [NotEmpty.optimizeLoadRequest.orders,NotEmpty.orders,NotEmpty.java.util.List,NotEmpty]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [optimizeLoadRequest.orders,orders]; arguments []; default message [orders]]; default message [orders list cannot be empty]] "
+  ],
+  "timestamp": "2026-01-13T14:29:43.604543Z"
+}
+------------------------------------------
+[0;36mRunning test:[0m Invalid pickup/delivery dates
+[0;32mPASS[0m | HTTP 200 | 24 ms
+{
+  "truck_id": "truck-1",
+  "selected_order_ids": [],
+  "total_payout_cents": 0,
+  "total_weight_lbs": 0,
+  "total_volume_cuft": 0,
+  "utilization_weight_percent": 0.0,
+  "utilization_volume_percent": 0.0
+}
+------------------------------------------
+[0;36mRunning test:[0m Hazmat conflict
+[0;32mPASS[0m | HTTP 200 | 22 ms
+{
+  "truck_id": "truck-1",
+  "selected_order_ids": [
+    "n1"
+  ],
+  "total_payout_cents": 200000,
+  "total_weight_lbs": 6000,
+  "total_volume_cuft": 400,
+  "utilization_weight_percent": 13.64,
+  "utilization_volume_percent": 13.33
+}
+------------------------------------------
+[0;36mRunning test:[0m Single order exceeds capacity
+[0;32mPASS[0m | HTTP 200 | 25 ms
+{
+  "truck_id": "truck-1",
+  "selected_order_ids": [],
+  "total_payout_cents": 0,
+  "total_weight_lbs": 0,
+  "total_volume_cuft": 0,
+  "utilization_weight_percent": 0.0,
+  "utilization_volume_percent": 0.0
+}
+------------------------------------------
+[0;36mRunning test:[0m No feasible combination
+[0;32mPASS[0m | HTTP 200 | 23 ms
+{
+  "truck_id": "truck-1",
+  "selected_order_ids": [],
+  "total_payout_cents": 0,
+  "total_weight_lbs": 0,
+  "total_volume_cuft": 0,
+  "utilization_weight_percent": 0.0,
+  "utilization_volume_percent": 0.0
+}
+------------------------------------------
+[0;36mRunning test:[0m 22 orders - normal
+[0;32mPASS[0m | HTTP 200 | 1185 ms
+{
+  "truck_id": "truck-1",
+  "selected_order_ids": [
+    "o1",
+    "o2",
+    "o3",
+    "o4",
+    "o5",
+    "o6",
+    "o7",
+    "o8",
+    "o9",
+    "o10",
+    "o11",
+    "o12",
+    "o13",
+    "o14",
+    "o15",
+    "o16",
+    "o17",
+    "o18",
+    "o19",
+    "o20",
+    "o21",
+    "o22"
+  ],
+  "total_payout_cents": 2200253,
+  "total_weight_lbs": 22000,
+  "total_volume_cuft": 2200,
+  "utilization_weight_percent": 50.0,
+  "utilization_volume_percent": 73.33
+}
+------------------------------------------
+[0;36mRunning test:[0m 22 orders - hazmat only
+[0;32mPASS[0m | HTTP 200 | 1193 ms
+{
+  "truck_id": "truck-1",
+  "selected_order_ids": [
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+    "h7",
+    "h8",
+    "h9",
+    "h10",
+    "h11",
+    "h12",
+    "h13",
+    "h14",
+    "h15",
+    "h16",
+    "h17",
+    "h18",
+    "h19",
+    "h20",
+    "h21",
+    "h22"
+  ],
+  "total_payout_cents": 3300253,
+  "total_weight_lbs": 22000,
+  "total_volume_cuft": 2200,
+  "utilization_weight_percent": 50.0,
+  "utilization_volume_percent": 73.33
+}
+------------------------------------------
+[0;36mRunning test:[0m Route mismatch
+[0;32mPASS[0m | HTTP 200 | 28 ms
+{
+  "truck_id": "truck-1",
+  "selected_order_ids": [
+    "o2"
+  ],
+  "total_payout_cents": 200000,
+  "total_weight_lbs": 1000,
+  "total_volume_cuft": 100,
+  "utilization_weight_percent": 2.27,
+  "utilization_volume_percent": 3.33
+}
+------------------------------------------
+==========================================
+ Test execution completed
