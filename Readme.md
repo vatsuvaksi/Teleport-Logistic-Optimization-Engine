@@ -27,7 +27,7 @@ docker compose up --build
 The service will be available at:
 
 ```
-http://localhost:8080
+http://localhost:8080/
 ```
 
 Redis is automatically started via Docker Compose and used as an **optional cache**.
@@ -50,8 +50,53 @@ In this mode, the application uses **in-memory caching** only.
 ```bash
 curl -X POST http://localhost:8080/api/v1/load-optimizer/optimize \
   -H "Content-Type: application/json" \
-  -d @sample-request.json
+  -d '{
+    "truck": {
+      "id": "truck-1",
+      "max_weight_lbs": 44000,
+      "max_volume_cuft": 3000
+    },
+    "orders": [
+      {
+        "id": "ord-001",
+        "payout_cents": 250000,
+        "weight_lbs": 18000,
+        "volume_cuft": 1200,
+        "origin": "Los Angeles, CA",
+        "destination": "Dallas, TX",
+        "pickup_date": "2025-12-05",
+        "delivery_date": "2025-12-09",
+        "is_hazmat": false
+      },
+      {
+        "id": "ord-002",
+        "payout_cents": 180000,
+        "weight_lbs": 12000,
+        "volume_cuft": 900,
+        "origin": "Los Angeles, CA",
+        "destination": "Dallas, TX",
+        "pickup_date": "2025-12-04",
+        "delivery_date": "2025-12-10",
+        "is_hazmat": false
+      }
+    ]
+  }'
+
 ```
+
+## Edge Case & Failure Behavior
+
+| Case                            | Behavior                 | Status |
+|---------------------------------|--------------------------|--------|
+| Empty orders list               | Rejected                 | 400    |
+| Invalid dates / missing fields  | Rejected                 | 400    |
+| Orders > 22                     | Rejected                 | 413    |
+| Order > truck capacity          | Ignored by optimizer     | 200    |
+| No feasible combination         | Empty result             | 200    |
+| Hazmat conflicts                | Optimizer excludes       | 200    |
+| Redis down                      | Fallback to compute      | 200    |
+| Optimizer bug / overflow        | Safe error               | 422    |
+| Unexpected runtime error        | Consistent JSON response | 500    |
 
 ---
 
@@ -160,20 +205,6 @@ The implementation uses **bitmask-based dynamic programming** to evaluate all fe
 
 ---
 
-## Edge Case & Failure Behavior
-
-| Case                           | Behavior             | Status    |
-| ------------------------------ | -------------------- | --------- |
-| Empty orders list              | Rejected             | 400       |
-| Invalid dates / missing fields | Rejected             | 400       |
-| Order > truck capacity         | Ignored by optimizer | 200       |
-| No feasible combination        | Empty result         | 200       |
-| Hazmat conflicts               | Optimizer excludes   | 200       |
-| Redis down                     | Fallback to compute  | 200       |
-| Optimizer bug / overflow       | Safe error           | 422 / 500 |
-| Unexpected runtime error       | Consistent JSON      | 500       |
-
----
 
 ## Why This Solution Is Production-Ready
 
@@ -195,7 +226,3 @@ The implementation uses **bitmask-based dynamic programming** to evaluate all fe
 * Docker & Docker Compose
 
 ---
-
-## Final Note
-
-This project prioritizes **correctness first**, followed by performance, extensibility, and operational safety exactly what is expected from a core logistics optimization service.
